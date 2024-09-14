@@ -1,10 +1,8 @@
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
 }
-
 
 header {
     background-color: #004d40;
@@ -12,7 +10,6 @@ header {
     text-align: center;
     padding: 1rem;
 }
-
 
 .main-container {
     display: flex;
@@ -49,7 +46,6 @@ header {
     background-color: #003d33;
 }
 
-
 .content {
     flex: 1;
     padding: 1.5rem; 
@@ -58,14 +54,12 @@ header {
     box-sizing: border-box;
 }
 
-
 .book-entries {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem; 
     margin-top: 1.5rem; 
 }
-
 
 .book-entry {
     background: #ffffff;
@@ -95,7 +89,6 @@ header {
     font-size: 1rem; 
     color: #004d40; 
 }
-
 
 @media (max-width: 768px) {
     .book-entry {

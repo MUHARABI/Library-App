@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Library Management System</h1>
+    </header>
+    <div class="main-container">
+        <nav class="side-tabs">
+            <button id="addBtn">Add Item</button>
+            <button id="clearBtn">Clear Library</button>
+            <button id="checkoutBtn">Check Out Book</button>
+            <button id="removeBtn">Remove Entry</button>
+            <button id="searchBtn">Search Entry</button>
+        </nav>
+        <main class="content">
+            <div id="response">
+                
+            </div>
+       
+            <div id="addItemForm" style="display: none;">
+                <h2>Add a New Book</h2>
+                <form id="addForm">
+                    <label for="bookTitle">Book Title:</label>
+                    <input type="text" id="bookTitle" name="bookTitle" required><br><br>
+                    <label for="isbn">ISBN (13-digits with hyphens):</label>
+                    <input type="text" id="isbn" name="isbn" required><br><br>
+                    <button type="submit">Add Book</button>
+                </form>
+            </div>
+            
+            <div id="removeItemForm" style="display: none;">
+                <h2>Remove a Book</h2>
+                <form id="removeForm">
+                    <label for="removeBy">Remove by:</label>
+                    <select id="removeBy" name="removeBy">
+                        <option value="name">Name</option>
+                        <option value="isbn">ISBN</option>
+                    </select><br><br>
+                    <label for="removeValue">Enter value:</label>
+                    <input type="text" id="removeValue" name="removeValue" required><br><br>
+                    <button type="submit">Remove Book</button>
+                </form>
+            </div>
+     
+            <div id="searchItemForm" style="display: none;">
+                <h2>Search for a Book</h2>
+                <form id="searchForm">
+                    <label for="searchBy">Search by:</label>
+                    <select id="searchBy" name="searchBy">
+                        <option value="name">Name</option>
+                        <option value="isbn">ISBN</option>
+                    </select><br><br>
+                    <label for="searchValue">Enter value:</label>
+                    <input type="text" id="searchValue" name="searchValue" required><br><br>
+                    <button type="submit">Search Book</button>
+                </form>
+            </div>
+ 
+            <div id="checkoutItemForm" style="display: none;">
+                <h2>Check Out a Book</h2>
+                <form id="checkoutForm">
+                    <label for="checkoutTitle">Book Title:</label>
+                    <input type="text" id="checkoutTitle" name="checkoutTitle" required><br><br>
+                    <button type="submit">Check Out Book</button>
+                </form>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

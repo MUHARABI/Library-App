@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library Management System</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
 </head>
 <body>
     <header>
@@ -21,8 +19,10 @@
             <button id="searchBtn">Search Entry</button>
         </nav>
         <main class="content">
-            <div id="response"></div>
-
+            <div id="response">
+                
+            </div>
+       
             <div id="addItemForm" style="display: none;">
                 <h2>Add a New Book</h2>
                 <form id="addForm">
@@ -47,7 +47,7 @@
                     <button type="submit">Remove Book</button>
                 </form>
             </div>
-
+     
             <div id="searchItemForm" style="display: none;">
                 <h2>Search for a Book</h2>
                 <form id="searchForm">
@@ -61,7 +61,7 @@
                     <button type="submit">Search Book</button>
                 </form>
             </div>
-
+ 
             <div id="checkoutItemForm" style="display: none;">
                 <h2>Check Out a Book</h2>
                 <form id="checkoutForm">

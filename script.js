@@ -1,12 +1,14 @@
+// Initialize library
 let library = [];
 
+// Get DOM elements
 const addForm = document.getElementById('addForm');
 const removeForm = document.getElementById('removeForm');
 const searchForm = document.getElementById('searchForm');
 const checkoutForm = document.getElementById('checkoutForm');
 const responseDiv = document.getElementById('response');
 
-//Load library 
+// Load library from local storage
 function loadFromLocalStorage() {
     const storedLibrary = localStorage.getItem('library');
     if (storedLibrary) {
@@ -17,12 +19,12 @@ function loadFromLocalStorage() {
     displayLibraryEntries();
 }
 
-//Save library 
+// Save library to local storage
 function saveToLocalStorage() {
     localStorage.setItem('library', JSON.stringify(library));
 }
 
-//Display library entries
+// Display library entries
 function displayLibraryEntries() {
     responseDiv.innerHTML = '<h2>Library Inventory:</h2>';
     if (library.length === 0) {
@@ -54,26 +56,26 @@ function displayLibraryEntries() {
     }
 }
 
-//Add book to library
+// Add book to library
 addForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const bookTitle = document.getElementById('bookTitle').value;
     const isbn = document.getElementById('isbn').value;
 
-    //Validate the ISBN format
+    // Validate the ISBN format
     if (isbn.length !== 17 || !/^(\d{3}-\d{1}-\d{2}-\d{6}-\d{1})$/.test(isbn)) {
         alert('Invalid ISBN format.');
         return;
     }
 
-    //Add book to library
+    // Add book to library
     library.push({ title: bookTitle, isbn, status: 'In Library' });
     saveToLocalStorage();
     displayLibraryEntries();
-    showForm('');
+    showForm(''); 
 });
 
-//Remove book from library
+// Remove book from library
 removeForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const removeBy = document.getElementById('removeBy').value;
@@ -91,10 +93,10 @@ removeForm.addEventListener('submit', (event) => {
 
     saveToLocalStorage();
     displayLibraryEntries();
-    showForm(''); 
+    showForm(''); // Hide form after removing
 });
 
-//Search for a book in the library
+// Search for a book in the library
 searchForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const searchBy = document.getElementById('searchBy').value;
@@ -124,32 +126,7 @@ searchForm.addEventListener('submit', (event) => {
     }
 });
 
-//Checkout book from library
-checkoutForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const checkoutTitle = document.getElementById('checkoutTitle').value;
-
-    let bookFound = false;
-    library = library.map(book => {
-        if (book.title === checkoutTitle && book.status === 'In Library') {
-            book.status = 'Checked Out';
-            bookFound = true;
-        }
-        return book;
-    });
-
-    if (bookFound) {
-        saveToLocalStorage();
-        displayLibraryEntries();
-        responseDiv.innerHTML = '<p>Book successfully checked out.</p>';
-    } else {
-        responseDiv.innerHTML = '<p>Book not found or already checked out.</p>';
-    }
-
-    showForm(''); 
-});
-
-//Clear library
+// Clear library
 document.getElementById('clearBtn').addEventListener('click', () => {
     if (confirm('Are you sure you want to clear the entire library?')) {
         library = [];
@@ -158,7 +135,7 @@ document.getElementById('clearBtn').addEventListener('click', () => {
     }
 });
 
-//show or hide forms
+// Function to show or hide forms
 function showForm(formId) {
     document.getElementById('addItemForm').style.display = formId === 'addItemForm' ? 'block' : 'none';
     document.getElementById('removeItemForm').style.display = formId === 'removeItemForm' ? 'block' : 'none';
@@ -166,11 +143,11 @@ function showForm(formId) {
     document.getElementById('checkoutItemForm').style.display = formId === 'checkoutItemForm' ? 'block' : 'none';
 }
 
-//Event listeners for side tabs
+// Event listeners for side tabs
 document.getElementById('addBtn').addEventListener('click', () => showForm('addItemForm'));
 document.getElementById('removeBtn').addEventListener('click', () => showForm('removeItemForm'));
 document.getElementById('searchBtn').addEventListener('click', () => showForm('searchItemForm'));
 document.getElementById('checkoutBtn').addEventListener('click', () => showForm('checkoutItemForm'));
 
-//Initialize on page load
+// Initialize on page load
 document.addEventListener('DOMContentLoaded', loadFromLocalStorage);

@@ -72,7 +72,7 @@ addForm.addEventListener('submit', (event) => {
     library.push({ title: bookTitle, isbn, status: 'In Library' });
     saveToLocalStorage();
     displayLibraryEntries();
-    showForm(''); 
+    showForm('');
 });
 
 // Remove book from library
@@ -124,6 +124,31 @@ searchForm.addEventListener('submit', (event) => {
         });
         responseDiv.appendChild(ul);
     }
+});
+
+// Checkout book from library
+checkoutForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const checkoutTitle = document.getElementById('checkoutTitle').value;
+
+    let bookFound = false;
+    library = library.map(book => {
+        if (book.title === checkoutTitle && book.status === 'In Library') {
+            book.status = 'Checked Out';
+            bookFound = true;
+        }
+        return book;
+    });
+
+    if (bookFound) {
+        saveToLocalStorage();
+        displayLibraryEntries();
+        responseDiv.innerHTML = '<p>Book successfully checked out.</p>';
+    } else {
+        responseDiv.innerHTML = '<p>Book not found or already checked out.</p>';
+    }
+
+    showForm(''); // Hide the form after checking out
 });
 
 // Clear library

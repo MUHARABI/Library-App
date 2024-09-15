@@ -1,38 +1,44 @@
 // Initialize library
 let library = [];
 
-// Get DOM elements
-const addForm = document.getElementById('addForm');
-const removeForm = document.getElementById('removeForm');
-const searchForm = document.getElementById('searchForm');
-const checkoutForm = document.getElementById('checkoutForm');
-const responseDiv = document.getElementById('response');
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "your-api-key",
+    authDomain: "your-auth-domain",
+    projectId: "your-project-id",
+    storageBucket: "your-storage-bucket",
+    messagingSenderId: "your-messaging-sender-id",
+    appId: "your-app-id",
+    databaseURL: "your-database-url"
+};
 
-// Load library from local storage
-function loadFromLocalStorage() {
-    const storedLibrary = localStorage.getItem('library');
-    if (storedLibrary) {
-        library = JSON.parse(storedLibrary);
-    } else {
-        library = [];
-    }
-    displayLibraryEntries();
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+// Load library from Firebase
+function loadFromFirebase() {
+    db.ref('library').on('value', (snapshot) => {
+        library = snapshot.val() || [];
+        displayLibraryEntries();
+    });
 }
 
-// Save library to local storage
-function saveToLocalStorage() {
-    localStorage.setItem('library', JSON.stringify(library));
+// Save library to Firebase
+function saveToFirebase() {
+    db.ref('library').set(library);
 }
 
 // Display library entries
 function displayLibraryEntries() {
+    const responseDiv = document.getElementById('response');
     responseDiv.innerHTML = '<h2>Library Inventory:</h2>';
     if (library.length === 0) {
         responseDiv.innerHTML += '<p>No books in the library.</p>';
     } else {
         const bookEntriesDiv = document.createElement('div');
         bookEntriesDiv.classList.add('book-entries');
-        
+
         library.forEach(book => {
             const bookEntryDiv = document.createElement('div');
             bookEntryDiv.classList.add('book-entry');
@@ -57,7 +63,7 @@ function displayLibraryEntries() {
 }
 
 // Add book to library
-addForm.addEventListener('submit', (event) => {
+document.getElementById('addForm').addEventListener('submit', (event) => {
     event.preventDefault();
     const bookTitle = document.getElementById('bookTitle').value;
     const isbn = document.getElementById('isbn').value;
@@ -70,13 +76,13 @@ addForm.addEventListener('submit', (event) => {
 
     // Add book to library
     library.push({ title: bookTitle, isbn, status: 'In Library' });
-    saveToLocalStorage();
+    saveToFirebase();
     displayLibraryEntries();
     showForm('');
 });
 
 // Remove book from library
-removeForm.addEventListener('submit', (event) => {
+document.getElementById('removeForm').addEventListener('submit', (event) => {
     event.preventDefault();
     const removeBy = document.getElementById('removeBy').value;
     const removeValue = document.getElementById('removeValue').value;
@@ -91,13 +97,13 @@ removeForm.addEventListener('submit', (event) => {
         return true;
     });
 
-    saveToLocalStorage();
+    saveToFirebase();
     displayLibraryEntries();
-    showForm(''); // Hide form after removing
+    showForm('');
 });
 
 // Search for a book in the library
-searchForm.addEventListener('submit', (event) => {
+document.getElementById('searchForm').addEventListener('submit', (event) => {
     event.preventDefault();
     const searchBy = document.getElementById('searchBy').value;
     const searchValue = document.getElementById('searchValue').value;
@@ -112,6 +118,7 @@ searchForm.addEventListener('submit', (event) => {
         return false;
     });
 
+    const responseDiv = document.getElementById('response');
     responseDiv.innerHTML = '<h2>Search Results:</h2>';
     if (searchResults.length === 0) {
         responseDiv.innerHTML += '<p>No matching books found.</p>';
@@ -127,7 +134,7 @@ searchForm.addEventListener('submit', (event) => {
 });
 
 // Checkout book from library
-checkoutForm.addEventListener('submit', (event) => {
+document.getElementById('checkoutForm').addEventListener('submit', (event) => {
     event.preventDefault();
     const checkoutTitle = document.getElementById('checkoutTitle').value;
 
@@ -140,39 +147,39 @@ checkoutForm.addEventListener('submit', (event) => {
         return book;
     });
 
+    const responseDiv = document.getElementById('response');
     if (bookFound) {
-        saveToLocalStorage();
+        saveToFirebase();
         displayLibraryEntries();
         responseDiv.innerHTML = '<p>Book successfully checked out.</p>';
     } else {
         responseDiv.innerHTML = '<p>Book not found or already checked out.</p>';
     }
 
-    showForm(''); // Hide the form after checking out
+    showForm('');
 });
 
 // Clear library
 document.getElementById('clearBtn').addEventListener('click', () => {
     if (confirm('Are you sure you want to clear the entire library?')) {
         library = [];
-        saveToLocalStorage();
+        saveToFirebase();
         displayLibraryEntries();
     }
 });
 
-// Function to show or hide forms
+// Utility to show/hide forms
 function showForm(formId) {
-    document.getElementById('addItemForm').style.display = formId === 'addItemForm' ? 'block' : 'none';
-    document.getElementById('removeItemForm').style.display = formId === 'removeItemForm' ? 'block' : 'none';
-    document.getElementById('searchItemForm').style.display = formId === 'searchItemForm' ? 'block' : 'none';
-    document.getElementById('checkoutItemForm').style.display = formId === 'checkoutItemForm' ? 'block' : 'none';
+    document.querySelectorAll('main div').forEach(form => form.style.display = 'none');
+    if (formId) {
+        document.getElementById(formId).style.display = 'block';
+    }
 }
 
-// Event listeners for side tabs
 document.getElementById('addBtn').addEventListener('click', () => showForm('addItemForm'));
 document.getElementById('removeBtn').addEventListener('click', () => showForm('removeItemForm'));
-document.getElementById('searchBtn').addEventListener('click', () => showForm('searchItemForm'));
 document.getElementById('checkoutBtn').addEventListener('click', () => showForm('checkoutItemForm'));
+document.getElementById('searchBtn').addEventListener('click', () => showForm('searchItemForm'));
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', loadFromLocalStorage);
+// Load library on page load
+document.addEventListener('DOMContentLoaded', loadFromFirebase);

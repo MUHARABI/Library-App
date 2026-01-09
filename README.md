@@ -31,6 +31,7 @@ https://muharabi.github.io/Library-App/
 
 ---
 ## Project Structure
+```txt
 Library-App/
 │
 ├── library.cpp # Main C++ source file

@@ -43,5 +43,19 @@ Library-App/
 │
 └── README.md # Project documentation
 
-## 📁 Project Structure
+---
+
+## ▶️ How to Run (C++ Console App)
+
+### Prerequisites
+- C++ compiler (e.g. `g++`)
+- Terminal / Command Prompt
+
+### Compile
+```bash
+g++ library.cpp -o library
+
+
+
+
 

@@ -38,7 +38,7 @@ https://muharabi.github.io/Library-App/
 - Terminal / Command Prompt
 
 ### Compile
-```bash
+
 g++ library.cpp -o library
 
 

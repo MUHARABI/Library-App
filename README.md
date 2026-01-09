@@ -30,6 +30,19 @@ https://muharabi.github.io/Library-App/
 - **HTML / CSS / JavaScript** (for the web-based interface/demo)
 
 ---
+
+## ▶️ How to Run (C++ Console App)
+
+### Prerequisites
+- C++ compiler (e.g. `g++`)
+- Terminal / Command Prompt
+
+### Compile
+```bash
+g++ library.cpp -o library
+
+
+---
 ## Project Structure
 ```txt
 Library-App/
@@ -43,18 +56,6 @@ Library-App/
 ├── script.js # JavaScript logic
 │
 └── README.md # Project documentation
-
----
-
-## ▶️ How to Run (C++ Console App)
-
-### Prerequisites
-- C++ compiler (e.g. `g++`)
-- Terminal / Command Prompt
-
-### Compile
-```bash
-g++ library.cpp -o library
 
 
 

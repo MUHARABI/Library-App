@@ -31,7 +31,7 @@ https://muharabi.github.io/Library-App/
 
 ---
 
-## ▶️ How to Run (C++ Console App)
+## How to Run (C++ Console App)
 
 ### Prerequisites
 - C++ compiler (e.g. `g++`)
